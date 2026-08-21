@@ -1,0 +1,22 @@
+@echo off
+rem ============================================================================
+rem  Per-machine override example.
+rem  Copy to isaaclab.local.bat - that name is gitignored.
+rem  Only needed when auto-detection fails. Check with: il --where
+rem
+rem  This is the ONLY file in the repo allowed to contain absolute paths.
+rem  ASCII only - see the note in il.bat.
+rem ============================================================================
+
+rem IsaacLab checkout - the folder that contains isaaclab.bat
+rem set "ISAACLAB_PATH=D:\IsaacLab"
+
+rem Python environment - the folder that contains Scripts\python.exe
+rem set "ISAACLAB_VENV=D:\rl\IsaacLabRL\env_isaaclab"
+
+rem Show the Newton viewer during training as well as playback
+rem set "IL_VISUALIZER=newton"
+
+rem Only if you use a downloaded Isaac Sim - not needed for kitless
+rem set "ISAACSIM_PATH=D:\isaac_601"
+rem set "ISAACSIM_PYTHON_EXE=%ISAACSIM_PATH%\python.bat"

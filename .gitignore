@@ -1,0 +1,28 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# 학습 산출물 — 리포에 넣지 않습니다
+logs/
+runs/
+outputs/
+*.pt
+*.pth
+*.onnx
+events.out.tfevents.*
+
+# Isaac Lab 체크아웃을 이 폴더 안에 두는 경우
+IsaacLab/
+_isaac_sim
+
+.vscode/
+.idea/
+*.log
+
+# 머신별 경로 override — 리포에 넣지 않습니다
+isaaclab.local.bat
+
+# 예제 산출물
+out/

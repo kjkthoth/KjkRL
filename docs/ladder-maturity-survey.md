@@ -9,7 +9,13 @@ cable/cloth 한정을 걷어냈습니다.
 | 문서 | 축 |
 | --- | --- |
 | `rl-operations-survey.md` | 우리 스택 가용성 + 운영 규율 + 회사 요청 |
+| `how-training-runs.md` | 실행 단위 구조 — iteration 한 바퀴, 라이브러리 5종, 모드 A/B |
 | **이 문서** | **도메인 전반 성숙도.** 로코모션·이동체·조작·손재주·산업 배치 |
+
+> **`[실측]` 갱신 (2026-08-24)** — Isaac Sim 설치가 승인되어 우리 스택에서 **L3·L5가 열렸습니다.**
+> 이 문서의 성숙도 등급은 **도메인 전반 기준이므로 영향받지 않습니다** — 우리 가용성은
+> [`how-training-runs.md` 6절](how-training-runs.md)을 보십시오.
+> 관련해 7.2절의 "고리"가 우리 체크아웃에서 **`rlinf` 엔트리포인트로 실물 확인**됐습니다.
 
 ## 표기 규칙
 
@@ -276,6 +282,12 @@ GenSim은 상대적으로 단순한 top-down pick-place에 머물러 있습니�
 | **Probe · Learn · Distill** | **residual RL + 분포 인식 데이터 수집**의 3단계. 비싼 인간 시연 의존을 줄임 |
 
 **Probe-Learn-Distill이 residual RL을 쓴다는 점에 주목하십시오 — L5가 L2를 호출합니다.**
+
+> **`[실측]` 이 고리는 이미 우리 스택에 들어와 있습니다.** Isaac Lab 3.0 통합 학습 진입점의 5개 엔트리포인트 중
+> **`rlinf`가 VLA 후속학습 프레임워크**입니다 — OpenVLA·π0·π0.5·**GR00T** 지원, **GRPO·PPO** 제공,
+> Isaac Lab 공식 통합. 문서 예제가 `isaaclab_ppo_gr00t_assemble_trocar`(조립 태스크)입니다 `[문헌]`.
+> **즉 이 서베이가 문헌에서 찾은 구조적 발견이 제품에 이미 실려 있습니다.**
+> [`how-training-runs.md` 2.1절](how-training-runs.md)
 
 **미해결 난점도 명시돼 있습니다** `[문헌]`:
 시뮬 기반 RL은 **수백만 회 상호작용**이 필요하고 sim-to-real 격차가 크며, 실물 학습은 **비용이 과도하고 안전 문제**가 있습니다.

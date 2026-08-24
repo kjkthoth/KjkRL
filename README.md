@@ -1021,6 +1021,7 @@ SolverFeatherstone   SolverImplicitMPM   SolverKamino   SolverSemiImplicit
 
 - [`docs/rl-operations-survey.md`](docs/rl-operations-survey.md) — **운영 서베이.** 착수 지점 사다리, 평가 프로토콜, 도메인 랜덤화, 회사 요청 목록
 - [`docs/ladder-maturity-survey.md`](docs/ladder-maturity-survey.md) — **성숙도 서베이.** 같은 사다리를 도메인 전반(로코모션·이동체·조작·손재주·산업 배치)에서 재조사
+- [`docs/how-training-runs.md`](docs/how-training-runs.md) — **학습 실행의 해부.** iteration 한 바퀴의 구조, RL 라이브러리 5종, 모드 A(처음부터) / 모드 B(VLA 후속학습)
 - [`docs/newton-examples-manual.md`](docs/newton-examples-manual.md) — Newton 예제 매뉴얼
 - [Isaac Lab 설치 문서 (develop)](https://isaac-sim.github.io/IsaacLab/develop/source/setup/installation/index.html) — **명령은 항상 여기와 대조하십시오**
 - [kitless 설치 문서 (3.0.0-beta2)](https://isaac-sim.github.io/IsaacLab/release/3.0.0-beta2/source/setup/installation/kitless_installation.html) — **3절 경로 C의 출처**

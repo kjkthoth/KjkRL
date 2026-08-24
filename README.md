@@ -3,6 +3,8 @@
 새 머신에서 아무것도 없는 상태에서 **cartpole PPO 학습이 실제로 도는 것**까지가 이 문서의 범위입니다.
 개념·아키텍처(ManagerBased vs Direct, Term 구성, 커스텀 태스크)는 이 문서에 없습니다 — 학습이 한 번 돈 뒤에 별도 문서로 씁니다.
 
+> **무엇을 왜 그 순서로 학습시키는가**는 [`docs/rl-operations-survey.md`](docs/rl-operations-survey.md)에 있습니다 — 착수 지점(부트스트랩 사다리), 평가 프로토콜, 승격 게이트, cable/cloth 산업 레퍼런스. 이 문서(설치·첫 학습)의 다음 층입니다.
+
 ## 표기 규칙
 
 이 문서의 모든 주장에는 근거 등급이 붙습니다. **등급 없는 문장은 없습니다.**
@@ -1007,6 +1009,8 @@ SolverFeatherstone   SolverImplicitMPM   SolverKamino   SolverSemiImplicit
 
 ## 7. 그 다음
 
+**전체 실행 경로는 [서베이 7절](docs/rl-operations-survey.md#7-part-e--권고-실행-경로)에 게이트와 함께 정리돼 있습니다.** 아래는 이 문서 범위에서 이어지는 항목입니다.
+
 1. 정책을 GUI에서 재생해 확인 — Titan의 렌더 미달이 실제로 물리는지 여기서 드러납니다
 2. 개념 문서 작성 — ManagerBased vs Direct, Observation/Reward/Event/Curriculum Term, 커스텀 로봇 `ArticulationCfg`
 3. contact-rich 조립 태스크 (`Isaac-Factory-*`, `Isaac-Forge-*`, `Isaac-AutoMate-*`) — 이 태스크 ID는 로컬 2.3.2 체크아웃에서 확인한 것이므로 `[미확인]` 3.0에서 이름이 유지되는지 확인 필요
@@ -1015,6 +1019,8 @@ SolverFeatherstone   SolverImplicitMPM   SolverKamino   SolverSemiImplicit
 
 ## 참고 링크
 
+- [`docs/rl-operations-survey.md`](docs/rl-operations-survey.md) — **운영 서베이.** 부트스트랩 사다리, 평가 프로토콜, 도메인 랜덤화, 회사 요청 목록
+- [`docs/newton-examples-manual.md`](docs/newton-examples-manual.md) — Newton 예제 매뉴얼
 - [Isaac Lab 설치 문서 (develop)](https://isaac-sim.github.io/IsaacLab/develop/source/setup/installation/index.html) — **명령은 항상 여기와 대조하십시오**
 - [kitless 설치 문서 (3.0.0-beta2)](https://isaac-sim.github.io/IsaacLab/release/3.0.0-beta2/source/setup/installation/kitless_installation.html) — **3절 경로 C의 출처**
 - [newton-physics/newton](https://github.com/newton-physics/newton) — cable·cloth 예제의 출처. 6절

@@ -132,6 +132,80 @@ L1은 제가 "우리가 이미 갖고 있는 것"을 사다리에 끼워 넣은 
 > 토크 수준에서 잔차를 블렌딩합니다. **모델 기반 사전지식이 보상 설계 부담을 줄이는 것**이 이 칸의 값입니다.
 > [성숙도 서베이 4절](ladder-maturity-survey.md)
 
+### 3.2 사다리의 정확한 형태 — 축이 여럿입니다 `[문헌]`
+
+> **⚠ 이 절은 사다리 자체의 정의 결함을 고친 것입니다.** 3.0절에서 "사다리"가 자작 명칭이라고 밝혔는데,
+> **더 근본적인 문제는 사다리가 서로 독립인 여러 축을 한 줄로 눌러놨다는 점**입니다.
+> 그래서 "L0 = 맨땅"이 무엇을 뜻하는지가 문서 안에서 고정되지 않았습니다.
+
+**문헌은 이미 두 층을 분리해 놓았습니다.** `Deep RL for Robotics: A Survey of Real-World Successes`
+(Annual Review)의 분류축이 `robot competencies` · **`problem formulation`** · **`solution approach`** ·
+`level of real-world success` 이고, **problem formulation은 "이 로봇 문제를 RL 문제로 어떻게 추상화했나"**입니다.
+
+그리고 `Reinforcement Learning in Robotics: A Survey`(Kober·Bagnell·Peters, IJRR)가 로봇 RL을 다루기
+쉽게 만드는 요소로 **표현 선택 · 사전 지식(prior knowledge) 주입 · 시뮬 지식 전이**를 듭니다 —
+**"사전 지식"은 확립된 용어**이고, 문제는 그것이 **어느 축에 들어가는지**입니다.
+
+**"맨땅"이 헐거운 말인 이유가 여기 있습니다.** 두 층에 걸쳐 있어서, 층을 지정하지 않으면 참·거짓이 안 정해집니다.
+
+| 층 | 여기서 맨땅인가 | 무엇이 결정되는가 |
+| --- | --- | --- |
+| **Solution approach** | **예** — 무작위 초기화 정책이 보상으로 수렴 | 정책 초기 가중치, 데이터, 알고리즘 |
+| **Problem formulation** | **아니오** — 사전 지식이 잔뜩 들어감 | 관측·행동 공간, 보상, 초기 상태 분포, 종료 조건, 자산 |
+
+### 3.2.1 축 목록 — 사다리는 이 공간을 지나는 대각선이었습니다
+
+| 축 | 층 | 안 줄 때 | 최대로 줄 때 | 사다리에서 |
+| --- | --- | --- | --- | --- |
+| **관측 공간** | formulation | 실물 센서만 | 시뮬 전체 상태 = **특권 정보** | L4 |
+| **행동 공간** | formulation | 토크 직접 | 태스크 컨트롤러 + **잔차만** | **L2a · L2b** |
+| **보상** | formulation | 성공/실패만 (희소) | 조밀 설계 | 6.5절 거버넌스 |
+| **초기 상태 분포** | formulation | 완전 무작위 | 목표 근처 | 6.6절 커리큘럼 |
+| **종료 조건** | formulation | 없음 | 조기 종료로 실패 차단 | — |
+| **환경·자산** | formulation | 직접 작성 | 검증된 cfg 재사용 | L1a · L1b |
+| **정책 초기 가중치** | solution | 무작위 초기화 | 사전학습 VLA | **L5** |
+| **데이터** | solution | 없음 | 시연 다량 | **L3** |
+
+**축이 8개인데 사다리는 6칸이었습니다.** 그래서 사다리 위치 하나로는 상태를 다 지정할 수 없습니다.
+**사다리는 "실무에서 흔히 함께 채택되는 묶음"을 순서대로 늘어놓은 것**이고,
+그게 사다리가 보고에 유용한 이유이면서 동시에 분석 도구로는 못 쓰는 이유입니다.
+
+### 3.2.2 우리 cartpole을 축으로 찍어 보면 `[실측]`
+
+**"L0 맨땅"이라고 분류했던 실행이 실제로 받고 있는 것들입니다.**
+
+| 축 | cartpole이 받은 것 |
+| --- | --- |
+| 관측 공간 | **전체 상태** — cartpole은 완전관측이라 사실상 특권 정보 |
+| 행동 공간 | 저수준 구조. `[미확인]` **Direct 태스크는 effort(토크)일 수 있습니다** — 확인 필요 |
+| 보상 | **조밀 설계** — 각도·위치 항 |
+| 초기 상태 분포 | **직립 근처** 소폭 랜덤 |
+| 종료 조건 | 각도·위치 한계 **조기 종료** |
+| 환경·자산 | **검증된 cfg 재사용** |
+| 정책 초기 가중치 | 무작위 ← **여기만 맨땅** |
+| 데이터 | 없음 ← **여기만 맨땅** |
+
+**8축 중 6축에서 이미 받고 있습니다.** 사다리를 L0에서 L5로 올려도 **바뀌는 축은 2~3개**이고 나머지는 그대로입니다.
+**"L0과 L3이 그게 그 말 같아 보이는" 것은 착각이 아니라 관찰입니다.**
+
+### 3.2.3 그래서 간부진 말씀의 정확한 형태
+
+**"맨땅까지 갈 필요 없다"를 축으로 옮기면 이렇습니다.**
+
+- **8축 전부를 "안 줄 때"로 놓는 구성은 아무도 하지 않습니다.** 그런 실행은 문헌에 사실상 없습니다
+- **로코모션·드론의 "맨땅"도 formulation 축에서는 잔뜩 받고 있습니다** — `q_default`, PD 게인, 조기 종료, 조밀 보상
+- **따라서 실제 결정은 "맨땅이냐 아니냐"가 아니라 "어느 축을 얼마나 줄 것이냐"입니다**
+
+**이게 이 서베이가 도달해야 했던 형태입니다.** 3절 아래의 L0~L5 서술은 **보고용 요약으로 남기고**,
+설계 판단은 위 축 표로 하십시오.
+
+> **이 문서의 사다리에 대한 상시 주의 `[자작]`** — 지금까지 사다리에서 발견된 결함이 세 건이고
+> **원인이 모두 같습니다: 보고용 전달 장치를 분석 도구로 썼습니다.**
+> ①"부트스트랩 사다리"가 자작 명칭인데 표기가 없었음 (3.0절) →
+> ②L2 등급이 좁은 정의로만 매겨졌음 ([성숙도 서베이 4절](ladder-maturity-survey.md)) →
+> ③L0의 "맨땅"이 층을 지정하지 않아 의미가 안 정해졌음 (이 절).
+> **사다리로 설계 결정을 내리려 할 때마다 이 축 표로 내려오십시오.**
+
 ### L1 — 우리는 이미 템플릿을 갖고 있습니다
 
 `[실측]` README 6.1·6.2에 기록된 것이 정확히 L1 자산입니다.
@@ -545,6 +619,11 @@ README 6.6을 사다리·게이트와 합쳐 확장한 것입니다. **README 6.
 - [드레이프 테스터 굽힘 강성 추정 (ACM TOG)](https://dl.acm.org/doi/10.1145/3550454.3555464)
 - [Lightwheel — Newton 생태계 기여 / SimReady](https://lightwheel.ai/media/lightwheel-newton)
 - [Sim-to-Real RL for Deformable Object Manipulation (arXiv 1806.07851)](https://arxiv.org/abs/1806.07851)
+
+**축 분해 (3.2절)**
+- [Deep RL for Robotics: A Survey of Real-World Successes (arXiv 2408.03539)](https://arxiv.org/abs/2408.03539) — **`problem formulation` / `solution approach` 분리의 출처.** Annual Review of Control, Robotics, and Autonomous Systems
+- [Reinforcement Learning in Robotics: A Survey (Kober·Bagnell·Peters, IJRR)](https://www.ri.cmu.edu/pub_files/2013/7/Kober_IJRR_2013.pdf) — **"사전 지식(prior knowledge) 주입"이 확립된 용어인 근거**
+- [Taxonomy and Trends in RL for Robotics and Control Systems (arXiv 2510.21758)](https://arxiv.org/abs/2510.21758)
 
 **운영 규율**
 - [Deep RL at the Edge of the Statistical Precipice (NeurIPS 2021)](https://proceedings.neurips.cc/paper_files/paper/2021/file/f514cec81cb148559cf475e7426eed5e-Paper.pdf) — **6.2절 핵심 근거**

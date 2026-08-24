@@ -17,6 +17,7 @@
 | `[실측]` | 작업 머신에서 직접 확인한 값 (README와 동일) |
 | `[문서]` | NVIDIA·Isaac Lab 공식 문서·릴리스 노트 근거 |
 | `[문헌]` | **이 문서에서 추가.** 외부 논문·기술 블로그·보도자료 근거 |
+| `[자작]` | **이 문서에서 추가.** 이 문서가 만든 정리 장치·분류·명칭. **외부 근거가 아닙니다** |
 | `[미확인]` | 확인해야 하는 것 |
 
 > **`[문헌]`의 검증 한계를 먼저 밝힙니다.** 이 서베이는 격리된 실행 환경에서 작성됐고 **arxiv.org·isaac-sim.github.io·developer.nvidia.com 직접 열람이 egress 정책으로 차단**됐습니다.
@@ -66,18 +67,42 @@
 
 ---
 
-## 3. Part A — 부트스트랩 사다리 (착수 지점 6단계)
+## 3. Part A — 부트스트랩 사다리 (착수 지점 6단계) `[자작]`
+
+### 3.0 용어 주의 — 이 절의 이름은 업계 용어가 아닙니다
+
+**먼저 밝힙니다. "부트스트랩 사다리"는 이 문서가 만든 정리 장치입니다.** 검색해도 안 나옵니다.
+회의나 외부 문서에서 **업계 표준 용어처럼 쓰지 마십시오.** 나눠 보면 이렇습니다.
+
+| 구성 | 판정 |
+| --- | --- |
+| **"부트스트랩"** | `[문헌]` **실재하는 용어입니다.** 로봇 학습 문헌에서 "시연·플래닝·사전지식으로 RL을 bootstrap한다"가 논문 제목에 그대로 쓰입니다 — *Imitation Bootstrapped RL*, *PLANRL: …to Bootstrap Reinforcement Learning*, *Demonstration-Bootstrapped Autonomous Practicing*, *Bootstrap Your Own Skills* |
+| **"사다리" · L0–L5 번호** | `[자작]` **이 문서가 만든 것입니다.** 6칸 구성과 순서도 합성입니다 |
+| **각 칸의 내용** | `[문헌]` **전부 실재하는 명명된 개념입니다** — 아래 표의 "문헌 용어" 열 |
+
+**그리고 용어 충돌이 하나 있습니다.** RL에서 `bootstrapping`은 이미 다른 뜻으로 확립돼 있습니다 —
+Sutton & Barto의 TD 학습에서 **추정값을 다른 추정값으로 갱신하는 것**(`V(s) ← V(s) + α[r + γV(s′) − V(s)]`).
+**RL을 아는 사람은 "부트스트랩"을 이쪽으로 먼저 읽습니다.** 이 문서에서는 그 뜻이 아니라
+**"사전 지식을 넣고 학습을 시작한다"**는 로봇 학습 쪽 어법으로 씁니다. 구두 보고에서는
+"착수 지점" 또는 "사전 지식 계층"으로 말하는 편이 안전합니다.
+
+### 3.1 사다리
 
 아래로 갈수록 사전 지식을 많이 넣습니다. **위에서 아래로 읽고, 우리가 닿을 수 있는 가장 아래 칸에서 시작하십시오.**
+**"문헌 용어" 열이 실제 검색어입니다** — 각 칸을 더 파려면 그 이름으로 찾으십시오.
 
-| 칸 | 이름 | 무엇을 넣는가 | 언제 쓰는가 | 우리 스택 가용성 |
+| 칸 | 이름 | 문헌 용어 (검색어) | 무엇을 넣는가 | 우리 스택 가용성 |
 | --- | --- | --- | --- | --- |
-| **L0** | 맨땅 (tabula rasa) | 없음. 무작위 초기화 + 보상 | 저차원·조밀 보상. 로코모션 | **가능** — cartpole이 이것 `[실측]` |
-| **L1** | 자산·태스크 템플릿 재사용 | 검증된 env cfg, 솔버 설정, 보상 항 | 유사 태스크가 이미 있을 때 | **가능. 이미 있습니다** (아래) |
-| **L2** | 프리미티브 + Residual RL | 스크립트 컨트롤러를 기저로, RL은 보정분만 | 접촉 많고 안전이 걸릴 때 | **가능** |
-| **L3** | 시연 기반 (IL + 합성 증강) | 사람 시연 몇 개 → 합성 궤적 다량 | 태스크가 다단계일 때 | **불가** `[문서]` — kitless가 teleop·mimic 포기 |
-| **L4** | 교사-학생 증류 | 시뮬레이터 특권정보로 교사 학습 후 실측 관측 학생으로 증류 | 실물 이전이 목적일 때 | **부분 가능** — 학생 관측이 비카메라면 가능 |
-| **L5** | 파운데이션 모델 후속학습 | 사전학습된 VLA 가중치 | 언어 지시·범용성이 필요할 때 | **불가** — 카메라(RTX 렌더) 필요 |
+| **L0** | 맨땅 | `tabula rasa RL`, `learning from scratch` | 없음. 무작위 초기화 + 보상 | **가능** — cartpole이 이것 `[실측]` |
+| **L1** | 자산·태스크 템플릿 재사용 | **없음** — 명명된 연구 개념이 아니라 엔지니어링 관행입니다. **이 사다리에서 가장 약한 칸** | 검증된 env cfg, 솔버 설정, 보상 항 | **가능. 이미 있습니다** (아래) |
+| **L2** | 프리미티브 + Residual RL | `residual reinforcement learning`, `motion primitives` | 스크립트 컨트롤러를 기저로, RL은 보정분만 | **가능** |
+| **L3** | 시연 기반 (IL + 합성 증강) | `learning from demonstration (LfD)`, `imitation learning`, `imitation bootstrapped RL` | 사람 시연 몇 개 → 합성 궤적 다량 | **불가** `[문서]` — kitless가 teleop·mimic 포기 |
+| **L4** | 교사-학생 증류 | `teacher-student distillation`, `privileged information distillation` | 시뮬레이터 특권정보로 교사 학습 후 실측 관측 학생으로 증류 | **부분 가능** — 학생 관측이 비카메라면 가능 |
+| **L5** | 파운데이션 모델 후속학습 | `VLA post-training`, `foundation model fine-tuning` | 사전학습된 VLA 가중치 | **불가** — 카메라(RTX 렌더) 필요 |
+
+**L1에 문헌 용어가 없다는 것을 그냥 넘기지 마십시오.** 나머지 5칸은 논문으로 뒷받침되지만
+L1은 제가 "우리가 이미 갖고 있는 것"을 사다리에 끼워 넣은 칸입니다. **실행 가치는 가장 높지만
+(7절 1~3번이 전부 L1) 서베이 근거로는 가장 약합니다.** 이 둘을 섞지 마십시오.
 
 ### L1 — 우리는 이미 템플릿을 갖고 있습니다
 
@@ -428,6 +453,7 @@ README 6.6을 사다리·게이트와 합쳐 확장한 것입니다. **README 6.
 | 6 | mjlab의 변형체 지원 범위 | mjlab 문서 |
 | 7 | 변형체 태스크 5시드 비용 (Titan 벽시계) | 3번 게이트에서 측정 |
 | 8 | cable 고유 랜덤화 축의 타당 범위 | 4번(물성 식별) 결과에서 도출 |
+| 9 | **`[자작]` 항목이 더 있는지 재점검** — 3.0절처럼 이 문서의 합성물이 서베이 결과와 섞여 있는 자리 | 절별로 "이 분류는 어디서 왔는가"를 물어 확인 |
 
 ---
 
@@ -444,6 +470,13 @@ README 6.6을 사다리·게이트와 합쳐 확장한 것입니다. **README 6.
 - [mjlab (arXiv 2601.22074)](https://arxiv.org/abs/2601.22074) / [mujocolab/mjlab](https://github.com/mujocolab/mjlab)
 - [Isaac Lab 프레임워크 논문 (arXiv 2511.04831)](https://arxiv.org/abs/2511.04831)
 - [Neural Dynamics in Newton (NVIDIA SRL)](https://research.nvidia.com/labs/srl/post/advancing-robotics-development-neural-dynamics-newton) / [NVlabs/neural-robot-dynamics](https://github.com/NVlabs/neural-robot-dynamics) — NeRD. 학습된 동역학 모델로 솔버 대체, 실물 데이터로 미세조정
+
+**용어 근거 (3.0절)**
+- [Imitation Bootstrapped Reinforcement Learning (arXiv 2311.02198)](https://arxiv.org/abs/2311.02198) — "bootstrap" 용법의 근거
+- [PLANRL — Motion Planning and IL to Bootstrap RL (arXiv 2408.04054)](https://arxiv.org/abs/2408.04054)
+- [Demonstration-Bootstrapped Autonomous Practicing (arXiv 2203.15755)](https://arxiv.org/abs/2203.15755)
+- [Bootstrap Your Own Skills (CoRL 2023)](https://proceedings.mlr.press/v229/zhang23a/zhang23a.pdf)
+- [Sutton & Barto — Temporal-Difference Learning](https://web.stanford.edu/class/cme241/lecture_slides/rich_sutton_slides/11-12-TD.pdf) — **RL에서 `bootstrapping`의 확립된 뜻.** 3.0절 용어 충돌의 근거
 
 **부트스트랩 계층**
 - [Isaac Lab — Imitation Learning 문서](https://isaac-sim.github.io/IsaacLab/main/source/overview/imitation-learning/index.html)

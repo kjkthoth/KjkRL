@@ -1019,6 +1019,7 @@ SolverFeatherstone   SolverImplicitMPM   SolverKamino   SolverSemiImplicit
 
 ## 참고 링크
 
+- [`docs/commercial-rl-survey.md`](docs/commercial-rl-survey.md) — **상용 RL 서베이.** 지금 실제로 팔리고 돌아가는 RL의 수준. 상용화 등급 T1~T4, 근거를 `[논문]`/`[벤더]`로 분리
 - [`docs/rl-operations-survey.md`](docs/rl-operations-survey.md) — **운영 서베이.** 착수 지점 사다리, 평가 프로토콜, 도메인 랜덤화, 회사 요청 목록
 - [`docs/ladder-maturity-survey.md`](docs/ladder-maturity-survey.md) — **성숙도 서베이.** 같은 사다리를 도메인 전반(로코모션·이동체·조작·손재주·산업 배치)에서 재조사
 - [`docs/how-training-runs.md`](docs/how-training-runs.md) — **학습 실행의 해부.** iteration 한 바퀴의 구조, RL 라이브러리 5종, 모드 A(처음부터) / 모드 B(VLA 후속학습)

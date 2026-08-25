@@ -1019,6 +1019,7 @@ SolverFeatherstone   SolverImplicitMPM   SolverKamino   SolverSemiImplicit
 
 ## 참고 링크
 
+- [`docs/starting-kits-catalog.md`](docs/starting-kits-catalog.md) — **기초틀 카탈로그.** 지금 무엇을 받아서 시작하는가 — 물리·환경·RL 라이브러리·로봇 킷·벤치마크·데이터·사전학습 가중치·생성 도구 8계층
 - [`docs/commercial-rl-architectures.md`](docs/commercial-rl-architectures.md) — **상용 RL 아키텍처와 결과물.** 상용 시스템 7개의 관측→정책 구조→행동→학습→보상→안전 계층→결과 수치를 같은 형식으로
 - [`docs/commercial-rl-survey.md`](docs/commercial-rl-survey.md) — **상용 RL 서베이.** 지금 실제로 팔리고 돌아가는 RL의 수준. 상용화 등급 T1~T4, 근거를 `[논문]`/`[벤더]`로 분리
 - [`docs/rl-operations-survey.md`](docs/rl-operations-survey.md) — **운영 서베이.** 착수 지점 사다리, 평가 프로토콜, 도메인 랜덤화, 회사 요청 목록

@@ -1019,6 +1019,7 @@ SolverFeatherstone   SolverImplicitMPM   SolverKamino   SolverSemiImplicit
 
 ## 참고 링크
 
+- [`docs/commercial-rl-architectures.md`](docs/commercial-rl-architectures.md) — **상용 RL 아키텍처와 결과물.** 상용 시스템 7개의 관측→정책 구조→행동→학습→보상→안전 계층→결과 수치를 같은 형식으로
 - [`docs/commercial-rl-survey.md`](docs/commercial-rl-survey.md) — **상용 RL 서베이.** 지금 실제로 팔리고 돌아가는 RL의 수준. 상용화 등급 T1~T4, 근거를 `[논문]`/`[벤더]`로 분리
 - [`docs/rl-operations-survey.md`](docs/rl-operations-survey.md) — **운영 서베이.** 착수 지점 사다리, 평가 프로토콜, 도메인 랜덤화, 회사 요청 목록
 - [`docs/ladder-maturity-survey.md`](docs/ladder-maturity-survey.md) — **성숙도 서베이.** 같은 사다리를 도메인 전반(로코모션·이동체·조작·손재주·산업 배치)에서 재조사
